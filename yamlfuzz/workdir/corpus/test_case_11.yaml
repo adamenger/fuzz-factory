@@ -1,0 +1,2 @@
+key: &ANCHOR
+anotherKey: *UNKNOWN_ALIAS

@@ -1,0 +1,5 @@
+default: &DEFAULT
+  color: red
+apple:
+  <<: *DEFAULT
+  name: apple

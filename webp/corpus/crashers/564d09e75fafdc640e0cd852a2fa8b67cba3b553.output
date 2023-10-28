@@ -1,0 +1,117 @@
+program hanged (timeout 10 seconds)
+
+SIGABRT: abort
+PC=0x472afa m=0 sigcode=0
+
+goroutine 1 [running]:
+golang.org/x/image/riff.(*chunkReader).Read(0xc000012170?, {0xc0000e1000?, 0x1000?, 0x1000?})
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/riff/riff.go:173 +0x15a fp=0xc00006cae8 sp=0xc00006ca98 pc=0x472afa
+bufio.(*Reader).fill(0xc007d7e720)
+	/usr/local/go/src/bufio/bufio.go:106 +0x1dd fp=0xc00006cb20 sp=0xc00006cae8 pc=0x467c9d
+bufio.(*Reader).ReadByte(0xc007d7e720)
+	/usr/local/go/src/bufio/bufio.go:265 +0x77 fp=0xc00006cb40 sp=0xc00006cb20 pc=0x4685f7
+golang.org/x/image/vp8l.(*hTree).next(0xc0000cbb48, 0xc000010228)
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/vp8l/huffman.go:203 +0x8a fp=0xc00006cb90 sp=0xc00006cb40 pc=0x48588a
+golang.org/x/image/vp8l.(*decoder).decodePix(0xc000010228?, 0x3f06, 0x1800, 0x0, 0xc0?)
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/vp8l/decode.go:410 +0xa85 fp=0xc00006cc50 sp=0xc00006cb90 pc=0x483045
+golang.org/x/image/vp8l.Decode({0x4beac8?, 0xc000012170?})
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/vp8l/decode.go:589 +0x43e fp=0xc00006cd50 sp=0xc00006cc50 pc=0x48443e
+golang.org/x/image/webp.decode({0x4bea88?, 0xc000070a20?}, 0x0)
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/webp/decode.go:112 +0x975 fp=0xc00006ce60 sp=0xc00006cd50 pc=0x48a035
+golang.org/x/image/webp.Decode({0x4bea88?, 0xc000070a20?})
+	/home/adam/go/pkg/mod/golang.org/x/image@v0.13.0/webp/decode.go:255 +0x45 fp=0xc00006ce88 sp=0xc00006ce60 pc=0x48b285
+github.com/adamenger/webp.Fuzz({0x7f2ca928a000, 0x1e, 0x1e})
+	/home/adam/go/src/github.com/adamenger/webp/webpfuzz.go:10 +0xb8 fp=0xc00006cea8 sp=0xc00006ce88 pc=0x48b4b8
+go-fuzz-dep.Main({0xc00006cf68, 0x1, 0x492980?})
+	go-fuzz-dep/main.go:36 +0x15a fp=0xc00006cf50 sp=0xc00006cea8 pc=0x46189a
+main.main()
+	github.com/adamenger/webp/go.fuzz.main/main.go:15 +0x3b fp=0xc00006cf80 sp=0xc00006cf50 pc=0x48b59b
+runtime.main()
+	runtime/proc.go:250 +0x207 fp=0xc00006cfe0 sp=0xc00006cf80 pc=0x432027
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00006cfe8 sp=0xc00006cfe0 pc=0x45b001
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:381 +0xd6 fp=0xc00003afb0 sp=0xc00003af90 pc=0x432456
+runtime.goparkunlock(...)
+	runtime/proc.go:387
+runtime.forcegchelper()
+	runtime/proc.go:305 +0xb0 fp=0xc00003afe0 sp=0xc00003afb0 pc=0x432290
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00003afe8 sp=0xc00003afe0 pc=0x45b001
+created by runtime.init.6
+	runtime/proc.go:293 +0x25
+
+goroutine 3 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:381 +0xd6 fp=0xc00003b780 sp=0xc00003b760 pc=0x432456
+runtime.goparkunlock(...)
+	runtime/proc.go:387
+runtime.bgsweep(0x0?)
+	runtime/mgcsweep.go:319 +0xde fp=0xc00003b7c8 sp=0xc00003b780 pc=0x41f19e
+runtime.gcenable.func1()
+	runtime/mgc.go:178 +0x26 fp=0xc00003b7e0 sp=0xc00003b7c8 pc=0x414626
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00003b7e8 sp=0xc00003b7e0 pc=0x45b001
+created by runtime.gcenable
+	runtime/mgc.go:178 +0x6b
+
+goroutine 4 [GC scavenge wait]:
+runtime.gopark(0x5e93ae3c784e4?, 0x72f0054?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:381 +0xd6 fp=0xc00003bf70 sp=0xc00003bf50 pc=0x432456
+runtime.goparkunlock(...)
+	runtime/proc.go:387
+runtime.(*scavengerState).park(0x52fd00)
+	runtime/mgcscavenge.go:400 +0x53 fp=0xc00003bfa0 sp=0xc00003bf70 pc=0x41d093
+runtime.bgscavenge(0x0?)
+	runtime/mgcscavenge.go:633 +0x65 fp=0xc00003bfc8 sp=0xc00003bfa0 pc=0x41d685
+runtime.gcenable.func2()
+	runtime/mgc.go:179 +0x26 fp=0xc00003bfe0 sp=0xc00003bfc8 pc=0x4145c6
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00003bfe8 sp=0xc00003bfe0 pc=0x45b001
+created by runtime.gcenable
+	runtime/mgc.go:179 +0xaa
+
+goroutine 5 [finalizer wait]:
+runtime.gopark(0x4327d2?, 0x7f2cd086aae8?, 0x0?, 0x0?, 0xc00003a770?)
+	runtime/proc.go:381 +0xd6 fp=0xc00003a628 sp=0xc00003a608 pc=0x432456
+runtime.runfinq()
+	runtime/mfinal.go:193 +0x107 fp=0xc00003a7e0 sp=0xc00003a628 pc=0x413667
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00003a7e8 sp=0xc00003a7e0 pc=0x45b001
+created by runtime.createfing
+	runtime/mfinal.go:163 +0x45
+
+goroutine 6 [GC worker (idle)]:
+runtime.gopark(0x5e93af35cd0d4?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:381 +0xd6 fp=0xc00003c750 sp=0xc00003c730 pc=0x432456
+runtime.gcBgMarkWorker()
+	runtime/mgc.go:1275 +0xf1 fp=0xc00003c7e0 sp=0xc00003c750 pc=0x416191
+runtime.goexit()
+	runtime/asm_amd64.s:1598 +0x1 fp=0xc00003c7e8 sp=0xc00003c7e0 pc=0x45b001
+created by runtime.gcBgMarkStartWorkers
+	runtime/mgc.go:1199 +0x25
+
+rax    0xc000012170
+rbx    0xc0000e1000
+rcx    0x1000
+rdx    0x1000
+rdi    0x1000
+rsi    0xc0002f8b40
+rbp    0xc00006cad8
+rsp    0xc00006ca98
+r8     0x7f2ca927a000
+r9     0x4729a0
+r10    0xc000012170
+r11    0x1000
+r12    0x0
+r13    0xc0000cb500
+r14    0xc0000061a0
+r15    0x0
+rip    0x472afa
+rflags 0x246
+cs     0x33
+fs     0x0
+gs     0x0
+exit status 2
